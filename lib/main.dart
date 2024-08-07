@@ -1,25 +1,28 @@
-import 'package:api_app/view/home.dart';
+import 'package:api_app/view/list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'view_model/movie_view_model.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MovieViewModel()), // Provide MovieViewModel
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MovieListView(), // Use the MovieListView as the home screen
       ),
-      home:Hoome_Screen(),
     );
   }
 }
-
