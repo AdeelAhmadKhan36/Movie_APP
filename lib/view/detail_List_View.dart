@@ -3,8 +3,11 @@ import 'package:api_app/utils/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_model/movie_view_model.dart';
+import '../utils/utils.dart'; // Import Utils class
 
 class MovieDetailsView extends StatelessWidget {
+  const MovieDetailsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MovieViewModel>(context);
@@ -13,7 +16,7 @@ class MovieDetailsView extends StatelessWidget {
       appBar: CustomAppBar(
         backgroundColor: Color(kGreen.value),
         title: 'Your Favourite Movie',
-          showBackArrow:true,
+        showBackArrow: true,
       ),
       body: movieProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -29,31 +32,34 @@ class MovieDetailsView extends StatelessWidget {
               if (movieProvider.selectedMovie!.poster != null &&
                   movieProvider.selectedMovie!.poster!.isNotEmpty)
                 Center(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*0.5,
-                      width: MediaQuery.of(context).size.width*1,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        border: Border.all(color: Color(kRed.value),width:3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3), // Shadow position
-                          ),
-                        ],
-
-                      ),
-                      child: Image.network(
-                        movieProvider.selectedMovie!.poster!,
-                        height: 300,
-                        fit: BoxFit.cover,
-                      ),
-                    ))
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width * 1,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      border: Border.all(color: Color(kRed.value), width: 3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.7),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Image.network(
+                      movieProvider.selectedMovie!.poster!,
+                      height: 300,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        Utils().toastMessage('Unable to load image: ${movieProvider.selectedMovie!.poster}');
+                        return const Center(child: Icon(Icons.movie));
+                      },
+                    ),
+                  ),
+                )
               else
-                Center(child: Text("No Image Found")),
-
+                const Center(child: Text("No Image Found")),
               const SizedBox(height: 16),
               Container(
                 height: MediaQuery.of(context).size.height * 0.15,
@@ -67,7 +73,7 @@ class MovieDetailsView extends StatelessWidget {
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -92,11 +98,10 @@ class MovieDetailsView extends StatelessWidget {
               if (movieProvider.selectedMovie!.ratings != null &&
                   movieProvider.selectedMovie!.ratings!.isNotEmpty)
                 ...movieProvider.selectedMovie!.ratings!.map(
-                      (rating) =>
-                      _buildDetailRow(
-                        rating.source ?? 'Unknown',
-                        rating.value ?? 'N/A',
-                      ),
+                      (rating) => _buildDetailRow(
+                    rating.source ?? 'Unknown',
+                    rating.value ?? 'N/A',
+                  ),
                 ).toList()
               else
                 _buildDetailRow('Ratings', 'No ratings available'),
@@ -144,7 +149,7 @@ class MovieDetailsView extends StatelessWidget {
             child: Text(
               '$title:',
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -155,7 +160,7 @@ class MovieDetailsView extends StatelessWidget {
             child: Text(
               '$value',
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),

@@ -1,4 +1,4 @@
-import 'package:api_app/view/list_view.dart';
+import 'package:api_app/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'view_model/movie_view_model.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MovieListView(), // Use the MovieListView as the home screen
+        home: SplashScreen(), // Use the MovieListView as the home screen
       ),
     );
   }

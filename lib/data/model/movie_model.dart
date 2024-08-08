@@ -1,5 +1,3 @@
-// lib/data/model/movie_model.dart
-
 class MovieModel {
   String? title;
   String? year;

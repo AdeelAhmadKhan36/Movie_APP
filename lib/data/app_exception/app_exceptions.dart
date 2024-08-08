@@ -4,13 +4,13 @@ class AppException implements Exception {
 }
 
 class FetchDataException extends AppException {
-  FetchDataException(String message) : super(message);
+  FetchDataException(super.message);
 }
 
 class BadRequestException extends AppException {
-  BadRequestException(String message) : super(message);
+  BadRequestException(super.message);
 }
 
 class UnAuthorizedException extends AppException {
-  UnAuthorizedException(String message) : super(message);
+  UnAuthorizedException(super.message);
 }

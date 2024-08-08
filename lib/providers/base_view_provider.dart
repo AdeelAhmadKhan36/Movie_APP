@@ -1,5 +1,3 @@
-// lib/providers/base_view_model.dart
-
 import 'package:flutter/material.dart';
 
 abstract class BaseViewModel extends ChangeNotifier {
