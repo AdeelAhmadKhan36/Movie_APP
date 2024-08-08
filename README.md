@@ -28,6 +28,7 @@ The API key I have got from https://www.omdbapi.com/.
 1.	Launch the app on an emulator or physical device.
 2.	The app will display a list of movies retrieved from the API.
 3.	Scroll through the list to view different movies.
+4.	Also view a details description of the movie of your own choice.
 
    
 ## API
