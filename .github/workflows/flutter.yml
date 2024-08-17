@@ -20,23 +20,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ' 3.19.0'  # Use the latest Flutter version
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git
+          flutter/bin/flutter doctor
 
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter/bin/flutter pub get
 
       - name: Run tests
-        run: flutter test
+        run: flutter/bin/flutter test
 
       - name: Build APK
-        run: flutter build apk --release --split-per-abi
+        run: flutter/bin/flutter build apk --release --split-per-abi
 
       - name: Build iOS (Optional)
         run: |
-          flutter build ios --no-codesign
+          flutter/bin/flutter build ios --no-codesign
           cd build/ios/iphoneos
           mkdir Payload
           cd Payload
@@ -60,6 +60,6 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/release/*.apk,build/ios/iphoneos/app.ipa"
+          artifacts: "build/app/outputs/flutter-apk/*.apk,build/ios/iphoneos/app.ipa"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}
